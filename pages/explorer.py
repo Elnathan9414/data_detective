@@ -5,7 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-data = pd.read_csv("store_data.csv")
+data = st.session_state["filtered_data"]
 
 
 st.title("Data Explorer: Uncover Insights from Your Data")
@@ -15,138 +15,55 @@ st.subheader("Explore your datasets with interactive visualizations and summary 
 st.markdown("""### Summary Statistics""")
 st.write(data.describe())
 
-st.markdown("""### empty values""")
-st.write(data.isnull().sum())
-
-st.markdown("""### Drop ID Column""")
-data = data.drop(columns=["TransactionID"])
-st.write(data.describe())
-st.markdown("""### Product categories""")
-st.markdown("""#### Number of missing values in ProductCategory""")
-st.write(data["ProductCategory"].isna().sum())
-st.write((data["ProductCategory"].isna().sum() / len(data)) * 100)
-st.markdown(" The missing values in product category is less than 5% of the total data, we can replace them with the most frequent category")
-most_frequent_category = data["ProductCategory"].mode()[0]
-data["ProductCategory"] = data["ProductCategory"].fillna(most_frequent_category)
-st.markdown(" Number of missing values in ProductCategory")
-st.write(data["ProductCategory"].isna().sum())
-
-st.markdown("### Sales Distribution")
-
 col1, col2 = st.columns(2)
-
 with col1:
-    st.markdown("#### Histogram of Sales")
-    fig = px.histogram(
-    data,
-    x="Sales",
-    title="Sales Distribution",
-)
-    st.plotly_chart(fig, use_container_width=True)
-
+    st.markdown("""### Missing Values""")
+    st.write(data.isnull().sum())
 with col2:
-    st.markdown("#### Box Plot of Sales")
+    st.markdown("""### Drop ID Column""")
+    data = data.drop(columns=["TransactionID"])
+    st.write(data.describe())
 
-    fig = px.box(
-    data,
-    y="Sales",
-    title="Sales Distribution"
-)
-    st.plotly_chart(fig, use_container_width=True)
+st.markdown("""### Fill Missing Values """)
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.markdown("Product categories")
+    st.markdown(" Number of missing values in *ProductCategory*")
+    st.write(data["ProductCategory"].isna().sum())
+    st.write((data["ProductCategory"].isna().sum() / len(data)) * 100)
+    st.markdown(" The missing values in product category is less than 10% of the total data, we can replace them with the most frequent category")
+    most_frequent_category = data["ProductCategory"].mode()[0]
+    data["ProductCategory"] = data["ProductCategory"].fillna(most_frequent_category)
+    st.markdown(" Number of missing values in ProductCategory")
+    st.write(data["ProductCategory"].isna().sum())
+    st.bordered = True
+with col2:
+    
+    st.markdown(" Number of missing values in *Sales*")
+    st.markdown(" Number of missing values in *Sales*")
+    st.write(data["Sales"].isna().sum())
+    st.write((data["Sales"].isna().sum() / len(data)) * 100)
+    st.markdown(" The missing values in sales is less than 10% of the total data, we can replace them with the most frequent category")
+    most_frequent_sales = data["Sales"].mode()[0]
+    data["Sales"] = data["Sales"].fillna(most_frequent_sales)
+    st.markdown(" Number of missing values in *Sales*")
+    st.write(data["Sales"].isna().sum())
+with col3:
+    st.markdown(" Number of missing values in *Satisfaction*")
+    st.markdown(" Number of missing values in *Satisfaction*")
+    st.write(data["Satisfaction"].isna().sum())
+    st.write((data["Satisfaction"].isna().sum() / len(data)) * 100)
+    st.markdown(" The missing values in satisfaction is less than 10% of the total data, we can replace them with the most frequent category")
+    most_frequent_satisfaction = data["Satisfaction"].mode()[0]
+    data["Satisfaction"] = data["Satisfaction"].fillna(most_frequent_satisfaction)
+    st.markdown(" Number of missing values in *Satisfaction*")
+    st.write(data["Satisfaction"].isna().sum())
+    
     
 
-#customer
-st.markdown("""### customer""")
-st.markdown("""#### Number of missing values customer""")
-st.write(data["Customers"].isna().sum())
-st.write((data["Customers"].isna().sum() / len(data)) * 100)
-st.markdown(" The missing values in customers is equal to 5% of the total data, we can replace them with the most frequent category")
-most_frequent_customer = data["Customers"].mode()[0]
-data["Customers"] = data["Customers"].fillna(most_frequent_customer)
-st.markdown(" Number of missing values in Customers")
-st.write(data["Customers"].isna().sum())
-
-st.markdown("### customers Distribution")
-
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown("#### Histogram of Customers")
-    fig = px.histogram(
-    data,
-    x="Customers",
-    title="Customers Distribution",
-)
-    st.plotly_chart(fig, use_container_width=True)
-
-with col2:
-    st.markdown("#### Box Plot of Customers")
-
-    fig = px.box(
-    data, 
-    y="Customers", 
-    title="Customers Distribution"
-)
-    st.plotly_chart(fig, use_container_width=True)
-    
-# satisfaction
-st.markdown("""### satisfaction""")
-st.markdown("""#### Number of missing values satisfaction""")
-st.write(data["Satisfaction"].isna().sum())
-st.write((data["Satisfaction"].isna().sum() / len(data)) * 100)
-most_frequent_satisfaction = data["Satisfaction"].mode()[0]
-data["Satisfaction"] = data["Satisfaction"].fillna(most_frequent_satisfaction)
-st.markdown(" Number of missing values in Satisfaction")
-st.write(data["Satisfaction"].isna().sum())
-
-st.markdown("### satisfaction Distribution")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown("#### Histogram of Satisfaction")
-    fig = px.histogram(
-    data,
-    x="Satisfaction",
-    title="Satisfaction Distribution",
-)
-    st.plotly_chart(fig, use_container_width=True)
-
-with col2:
-    st.markdown("#### Box Plot of Satisfaction")
-
-    fig = px.box(
-    data, 
-    y="Satisfaction", 
-    title="Satisfaction Distribution"
-)
-
-    st.plotly_chart(fig, use_container_width=True)
-
-#Product Discount
-st.markdown("""### Product Discount""")
-col1, col2 = st.columns(2)
-with col1:
-    fig = px.histogram(
-    data,
-    x="DiscountPercent",
-    title="Discount Percent Distribution",
-)
-    st.plotly_chart(fig, use_container_width=True)
-with col2:
-    st.markdown("#### Box Plot of Discount Percent")
-
-    fig = px.box(
-    data, 
-    y="DiscountPercent", 
-    title="Discount Percent Distribution"
-)
-
-    st.plotly_chart(fig, use_container_width=True)
-
+st.markdown("""### Data overview visualizations""")
 #Product Category,city and store
-st.markdown("""### Pie charts""")
+st.markdown("""### categorical data""")
 col1, col2, col3 = st.columns(3)
 with col1:
     
@@ -183,3 +100,79 @@ with col3:
 
      st.plotly_chart(fig, use_container_width=True)
 
+
+st.markdown("""### Numerical data""")
+col1, col2 = st.columns(2)
+
+with col1:
+    
+    fig = px.histogram(
+        data,
+        x="Sales",
+        title="Sales Distribution",
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+with col2:
+  
+    fig = px.histogram(
+        data,
+        x="Satisfaction",
+        title="Satisfaction Distribution",
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+col3, col4 = st.columns(2)
+with col3:
+   
+    fig = px.histogram(
+        data,
+        x="DiscountPercent",
+        title="Discount Percent Distribution",
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    
+with col4:
+    
+    fig = px.histogram(
+        data,
+        x="Customers",
+        title="Customers Distribution",
+        
+    )
+    st.plotly_chart(fig, use_container_width=True)
+col5, col6, col7, col8 = st.columns(4)
+with col5:
+    
+    fig = px.box(
+        data,
+        x="DiscountPercent",
+        title="Discount Percent Distribution",
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    
+with col6:
+    
+    fig = px.box(
+        data,
+        x="Customers",
+        title="Customers Distribution",
+        
+    )
+    st.plotly_chart(fig, use_container_width=True)
+with col7:
+    
+    fig = px.violin(
+        data,
+        x="Sales",
+        title="Sales Distribution",
+    )
+    st.plotly_chart(fig, use_container_width=True)
+with col8:
+   
+    fig = px.violin(
+        data,
+        x="Satisfaction",
+        title="Satisfaction Distribution",
+    )
+    st.plotly_chart(fig, use_container_width=True)

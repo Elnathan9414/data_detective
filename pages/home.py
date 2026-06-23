@@ -13,6 +13,4 @@ st.markdown("""### Get Started:
 1. Use the navigation menu on the left to explore different sections of the app.
 2. Upload your datasets and start analyzing your data.
 3. Discover insights and make data-driven decisions to grow your business!""")
-st.markdown("""### Need Help?
-If you have any questions or need assistance, feel free to reach out to our support team or check out our documentation for more information on how to use the app effectively.""") 
 st.markdown("""### Let's get started on your data detective journey! :mag:""")
