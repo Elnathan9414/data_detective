@@ -10,7 +10,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 [data-testid="stSidebarNav"] {
-    font-size: 22px;
+    font-size: 14px;
 }
 </style>
 """, unsafe_allow_html=True)
