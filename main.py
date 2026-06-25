@@ -3,7 +3,7 @@ import pandas as pd
 
 st.set_page_config(
     page_title="data detective app",
-    page_icon=":pie chart:",
+    page_icon=":mag:",
     layout="wide",
 )
 
@@ -33,55 +33,55 @@ pg = st.navigation(
 )
 st.set_page_config(
     page_title="Data Detective App",
-    page_icon="📊",
+    page_icon=":mag:",
     layout="wide",
 )
 
 # load data
 data = pd.read_csv("store_data.csv")
 
-# Sidebar
-st.sidebar.title("🔍 Filters")
+# # Sidebar
+# st.sidebar.title("🔍 Filters")
 
-selected_city = st.sidebar.multiselect(
-    "City",
-    data["City"].unique(),
-    default=data["City"].unique()
-)
+# selected_city = st.sidebar.multiselect(
+#     "City",
+#     data["City"].unique(),
+#     default=data["City"].unique()
+# )
 
-selected_store = st.sidebar.multiselect(
-    "Store",
-    data["Store"].unique(),
-    default=data["Store"].unique()
-)
-selected_category = st.sidebar.multiselect(
-    "Product Category",
-    data["ProductCategory"].unique(),
-    default=data["ProductCategory"].unique()
-)
-selected_year = st.sidebar.multiselect(
-    "Year",
-    data["year"].unique(),
-    default=data["year"].unique()
-)
-selected_month = st.sidebar.multiselect(
-    "month",    
-    data["month"].unique(),
-    default=data["month"].unique()
-)
-selected_day = st.sidebar.multiselect(
-    "Day",
-    data["day"].unique(),
-     default=data["day"].unique()
-)
+# selected_store = st.sidebar.multiselect(
+#     "Store",
+#     data["Store"].unique(),
+#     default=data["Store"].unique()
+# )
+# selected_category = st.sidebar.multiselect(
+#     "Product Category",
+#     data["ProductCategory"].unique(),
+#     default=data["ProductCategory"].unique()
+# )
+# selected_year = st.sidebar.multiselect(
+#     "Year",
+#     data["year"].unique(),
+#     default=data["year"].unique()
+# )
+# selected_month = st.sidebar.multiselect(
+#     "month",    
+#     data["month"].unique(),
+#     default=data["month"].unique()
+# )
+# selected_day = st.sidebar.multiselect(
+#     "Day",
+#     data["day"].unique(),
+#      default=data["day"].unique()
+# )
 
-# Stockage global
-st.session_state["filtered_data"] = data[
-    (data["City"].isin(selected_city))
-    & (data["Store"].isin(selected_store))
-    & (data["ProductCategory"].isin(selected_category))
-    & (data["year"].isin(selected_year))
-    & (data["month"].isin(selected_month))
-    & (data["day"].isin(selected_day))
-]
+# # Stockage global
+# st.session_state["filtered_data"] = data[
+#     (data["City"].isin(selected_city))
+#     & (data["Store"].isin(selected_store))
+#     & (data["ProductCategory"].isin(selected_category))
+#     & (data["year"].isin(selected_year))
+#     & (data["month"].isin(selected_month))
+#     & (data["day"].isin(selected_day))
+# ]
 pg.run()
