@@ -23,28 +23,28 @@ with col1:
     st.metric(
         label="Top Sales",
         value=f"${data['Sales'].max():,.2f}",
-        delta="+26.8%"
+        
     )
 
 with col2:
     st.metric(
         label="Top store",
         value=f"{top_store.index[0]}",
-        delta="-0.3%"
+        
     )
 
 with col3:
     st.metric(
         label="Top Product Category",
         value=f"{top_product_category.index[0]}",
-        delta="+27.4%"
+        
     )
 
 with col4:
     st.metric(
         label="top city",
         value=f"{data['City'].mode()[0]}",
-        delta="-0.5%"
+        
     )
 
 
@@ -52,19 +52,19 @@ with col5:
    st.metric(
         label="worst store",
         value=f"{worst_store.index[0]}",
-        delta="-0.3%"
+        
     )
 with col6:
     st.metric(
         label="worst Product Category",
         value=f"{Worse_product_category.index[0]}",
-        delta="+27.4%"
+        
     )
 with col7:
     st.metric(
         label="worst city",
         value=f"{worst_city.index[0]}",
-        delta="-0.5%"
+        
     )
 with col8:
     st.metric(
