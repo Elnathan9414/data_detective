@@ -70,7 +70,7 @@ with col8:
     st.metric(
         label="worst Sales",
         value=f"${data['Sales'].min():,.2f}",
-        delta="+26.8%"
+       
     )
 sales_store = (
     data.groupby("Store")["Sales"]
