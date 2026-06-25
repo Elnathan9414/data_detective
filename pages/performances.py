@@ -1,12 +1,12 @@
 import streamlit as st
 import plotly.express as px
 import pandas as pd
-import matplotlib.pyplot as plt
-import plotly.graph_objects as go
 
 
-str_year = st.session_state["filtered_data"]["year"].astype(str)
-data = st.session_state["filtered_data"]
+
+data = pd.read_csv("store_data_cleaned.csv")
+
+
 top_store = data.groupby("Store")["Sales"].sum().sort_values(ascending=False).head(1)
 top_product_category = data.groupby("ProductCategory")["Sales"].sum().sort_values(ascending=False).head(1)
 Worse_product_category = data.groupby("ProductCategory")["Sales"].sum().sort_values(ascending=True).head(1)
@@ -79,116 +79,119 @@ sales_store = (
     .reset_index()
 )
 
-# sales chart 
-period = st.segmented_control(
-    "📅 Time Period",
-    ["Year", "Month", "Day"],
-    default="Month"
-)
+# # sales chart 
+# period = st.segmented_control(
+#     "📅 Time Period",
+#     ["Year", "Month", "Day"],
+#     default="Month"
+# )
 
-if period == "Year":
-    sales_period = data.groupby("year")["Sales"].sum().reset_index()
-    sales_period["year"] = sales_period["year"].astype(str)
-    fig = px.line(
-        sales_period,
-        x="year",
-        y="Sales",
-        markers=True,
-        title="Sales Trend by Year"
-    )
+# if period == "Year":
+#     sales_period = data.groupby("year")["Sales"].sum().reset_index()
+#     sales_period["year"] = sales_period["year"].astype(str)
+#     fig = px.line(
+#         sales_period,
+#         x="year",
+#         y="Sales",
+#         markers=True,
+#         title="Sales Trend by Year"
+#     )
 
-elif period == "Month":
-    sales_period = data.groupby("month")["Sales"].sum().reset_index()
-    sales_period["month"] = sales_period["month"].astype(str)
+# elif period == "Month":
+#     sales_period = data.groupby("month")["Sales"].sum().reset_index()
+#     sales_period["month"] = sales_period["month"].astype(str)
 
-    fig = px.line(
-        sales_period,
-        x="month",
-        y="Sales",
-        markers=True,
-        title="Sales Trend by Month"
-    )
+#     fig = px.line(
+#         sales_period,
+#         x="month",
+#         y="Sales",
+#         markers=True,
+#         title="Sales Trend by Month"
+#     )
 
-else:
-    sales_period = data.groupby("day")["Sales"].sum().reset_index()
-    sales_period["day"] = sales_period["day"].astype(str)
-    fig = px.line(
-        sales_period,
-        x="day",
-        y="Sales",
-        markers=True,
-        title="Sales Trend by Day"
-    )
+# else:
+#     sales_period = data.groupby("day")["Sales"].sum().reset_index()
+#     sales_period["day"] = sales_period["day"].astype(str)
+#     fig = px.line(
+#         sales_period,
+#         x="day",
+#         y="Sales",
+#         markers=True,
+#         title="Sales Trend by Day"
+#     )
 
-st.plotly_chart(fig, use_container_width=True)
+# st.plotly_chart(fig, use_container_width=True)
 
 
 
-col1, col2, col3 = st.columns(3)
+# col1, col2, col3 = st.columns(3)
 
-with col1:
-    #bar chart for top product categories
-    sales_product_category = (
-        data.groupby("ProductCategory")["Sales"]
-        .sum()
-        .sort_values(ascending=True)
-        .reset_index()
-    )
+# with col1:
+#     #bar chart for top product categories
+#     sales_product_category = (
+#         data.groupby("ProductCategory")["Sales"]
+#         .sum()
+#         .sort_values(ascending=True)
+#         .reset_index()
+#     )
 
-    fig = px.bar(
-        sales_product_category,
-        x="Sales",
-        y="ProductCategory",
-        orientation="h",
-        title=" Total Sales by Product Category",
-        text_auto=True
-    )
+#     fig = px.bar(
+#         sales_product_category,
+#         x="Sales",
+#         y="ProductCategory",
+#         orientation="h",
+#         title=" Total Sales by Product Category",
+#         text_auto=True
+#     )
 
-    st.plotly_chart(fig, use_container_width=True)
-with col2:
-    #bar chart for top cities
-    sales_city = (
-        data.groupby("City")["Sales"]
-        .sum()
-        .sort_values(ascending=True)
-        .reset_index()
-    )
+#     st.plotly_chart(fig, use_container_width=True)
+# with col2:
+#     #bar chart for top cities
+#     sales_city = (
+#         data.groupby("City")["Sales"]
+#         .sum()
+#         .sort_values(ascending=True)
+#         .reset_index()
+#     )
 
-    fig = px.bar(
-        sales_city,
-        x="Sales",
-        y="City",
-        orientation="h",
-        title=" Total Sales by City",
-        text_auto=True
-    )
+#     fig = px.bar(
+#         sales_city,
+#         x="Sales",
+#         y="City",
+#         orientation="h",
+#         title=" Total Sales by City",
+#         text_auto=True
+#     )
 
-    st.plotly_chart(fig, use_container_width=True)
-with col3:
-    #bar chart for top stores
-    sales_store = (
-        data.groupby("Store")["Sales"]
-        .sum()
-        .sort_values(ascending=True)
-        .reset_index()
-    )
+#     st.plotly_chart(fig, use_container_width=True)
+# with col3:
+#     #bar chart for top stores
+#     sales_store = (
+#         data.groupby("Store")["Sales"]
+#         .sum()
+#         .sort_values(ascending=True)
+#         .reset_index()
+#     )
 
-    fig = px.bar(
-        sales_store,
-        x="Sales",
-        y="Store",
-        orientation="h",
-        title=" Total Sales by Store",
-        text_auto=True
-    )
+#     fig = px.bar(
+#         sales_store,
+#         x="Sales",
+#         y="Store",
+#         orientation="h",
+#         title=" Total Sales by Store",
+#         text_auto=True
+#     )
 
-    st.plotly_chart(fig, use_container_width=True)
+#     st.plotly_chart(fig, use_container_width=True)
     
-fig = px.violin(
-        data,
-        x="Store",
-        y="Sales",
-        title="Sales Distribution by Store"
-    )
+# fig = px.violin(
+#         data,
+#         x="Store",
+#         y="Sales",
+#         title="Sales Distribution by Store"
+#     )
 
-st.plotly_chart(fig, use_container_width=True)
+# st.plotly_chart(fig, use_container_width=True)
+
+st.components.v1.html("""<iframe title="retail_data" width="100%" height="800" 
+                      src="https://app.powerbi.com/view?r=eyJrIjoiMTQ2N2RlNjUtZWFmZS00NmFhLWJiYzgtMzdjNGMxYmM4ODdhIiwidCI6Ijk3ZTNiNTliLThmY2YtNDAzOC1iM2JmLWFkOWFiZmQ1NjM4MyJ9&pageName=2cb24480488220861d07" frameborder="0" allowFullScreen="true"></iframe>""", height=800)
